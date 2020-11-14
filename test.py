@@ -1,4 +1,4 @@
-from dot_notation_dictionary import DotNotationDict
+from dot_notation_dictionary import DotNotationDict, DefaultDotNotationDict
 
 dot_not_dict = DotNotationDict(
 	{
@@ -38,4 +38,8 @@ except AttributeError as err:
 
 
 print(f'\nValues in the DotNotationDict: {dot_not_dict}\n')
-print(dot_not_dict)
+
+default_dot_not_dict = DefaultDotNotationDict(0, {'a': 1, 'c': 1,})
+print(default_dot_not_dict.__dict__)
+print(default_dot_not_dict.b)
+print(isinstance(default_dot_not_dict, dict))
