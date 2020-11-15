@@ -45,16 +45,3 @@ class DotNotationDict(DefaultDotNotationDict):
 			*args,
 			**kwargs,
 		)
-
-
-	# def __getattr__(self, attribute_name):
-	# 	if attribute_name in self:
-	# 		return self[attribute_name]
-	# 	else:
-	# 		raise AttributeError(
-	# 			f'\'DotNotationDict\' object has no attribute \'{attribute_name}\''
-	# 		)
-
-
-	# def __setattr__(self, attribute_name, value):
-	# 	self[attribute_name] = value
