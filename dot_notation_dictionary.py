@@ -1,10 +1,11 @@
 class DefaultDotNotationDict(dict):
+	"""A Class that extends the standard 'dict' class."""
 		
 	class __NoDefault(object):
+		"""An empty Class, used to denote no default value."""
 		def __init__(self):
 			super().__init__()
-		
-	"""docstring for DefaultDotNotationDict"""
+
 	def __init__(self, default=__NoDefault(), *args, **kwargs):
 		super(DefaultDotNotationDict, self).__init__(*args, **kwargs)
 		if isinstance(
@@ -28,7 +29,6 @@ class DefaultDotNotationDict(dict):
 				f'\'DotNotationDict\' object has no attribute \'{attribute_name}\''
 			)
 
-
 	def __setattr__(self, attribute_name, value):
 		if not '_DefaultDotNotationDict__' in attribute_name:
 			self[attribute_name] = value
@@ -37,8 +37,8 @@ class DefaultDotNotationDict(dict):
 
 
 class DotNotationDict(DefaultDotNotationDict):
-		
-	"""docstring for DotNotationDict"""
+	"""A Class that extends the standard 'dict' class."""
+	
 	def __init__(self, *args, **kwargs):
 		super(DotNotationDict, self).__init__(
 			DefaultDotNotationDict._DefaultDotNotationDict__NoDefault(),
