@@ -1,2 +1,21 @@
 # dot-notation-dictionary
-A simple python extention of the 'dict' data structure. Allows for accessing the dictionary values by using the keys as class attributes
+
+A few simple python dict subclasses.
+
+These subclasses allow for accessing the dictionary values by using the keys as class attributes.
+
+For example, imagine a `DotDict` class instance named `d` with key value pairs: `{'alpha': 1, 'beta': 2}`
+
+The value of the 'alpha' key can be accessed by calling `d.alpha` as well as using the standard dict bracket notation: `d['alpha']` or the get method: `d.get('alpha')`.
+
+## Dict Subclasses
+
+### DotDict
+
+Basic dict subclass. 
+
+### DefaultDotDict
+
+Dict subclass that allows for a default value for keys that do not have a value when they are first accessed.
+
+

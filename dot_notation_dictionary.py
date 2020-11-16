@@ -1,6 +1,6 @@
 
 class DotDict(dict):
-    """A class that extends 'dict' to allow accessing keys as attributes."""
+    """A class that extends dict to allow accessing keys as attributes."""
 
     def __init__(self, *args, **kwargs):
         """Initalize the DotDict.
@@ -24,7 +24,9 @@ class DotDict(dict):
         self[attribute_name] = attribute_value
 
 class DefaultDotDict(dict):
-    """A class that extends DotDict to allow default values for keys."""
+    """A class that extends dict to allow accessing keys as attributes, 
+    with a default values for keys when they are accessed but not assigned.
+    """
 
     def __init__(self, default_value=None, *args, **kwargs):
         """Initalize the DefaultDotDict.
