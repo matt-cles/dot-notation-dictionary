@@ -1,47 +1,55 @@
-class DefaultDotNotationDict(dict):
-	"""A Class that extends the standard 'dict' class."""
-		
-	class __NoDefault(object):
-		"""An empty Class, used to denote no default value."""
-		def __init__(self):
-			super().__init__()
 
-	def __init__(self, default=__NoDefault(), *args, **kwargs):
-		super(DefaultDotNotationDict, self).__init__(*args, **kwargs)
-		if isinstance(
-			default, 
-			DefaultDotNotationDict._DefaultDotNotationDict__NoDefault,
-		):
-			self.__use_default = False
-		else:
-			self.__use_default = True
-			self.__default_value = default
+class DotDict(dict):
+	"""A class that extends 'dict' to allow accessing keys as attributes."""
+
+	def __init__(self, *args, **kwargs):
+		"""Initalize the DotDict.
+		
+		This method does nothing other that initialize the parent dict 
+		with the passed args and kwargs.
+		"""
+		super(DotDict, self).__init__(*args, **kwargs)
 
 	def __getattr__(self, attribute_name):
-		if attribute_name in self:
+		"""Get the dict value of the key where the attribute_name == key."""
+		try:
 			return self[attribute_name]
-		elif self._DefaultDotNotationDict__use_default:
-			value = self._DefaultDotNotationDict__default_value
-			self[attribute_name] = value
-			return self[attribute_name]
-		else:
-			raise AttributeError(
-				f'\'DotNotationDict\' object has no attribute \'{attribute_name}\''
+		except AttributeError:
+			raise KeyError(
+				f'KeyError: \'{attribute_name}\''
 			)
 
-	def __setattr__(self, attribute_name, value):
-		if not '_DefaultDotNotationDict__' in attribute_name:
-			self[attribute_name] = value
+	def __setattr__(self, attribute_name, attribute_value):
+		"""Set the dict value of the key where the attribute_name == key."""
+		self[attribute_name] = attribute_value
+
+class DefaultDotDict(dict):
+	"""A class that extends DotDict to allow default values for keys."""
+
+	def __init__(self, default_value=None, *args, **kwargs):
+		"""Initalize the DefaultDotDict.
+		
+		This method sets the default value with the first argument then 
+		initialize the parent dict with the remaining passed args and kwargs.
+		"""
+		super(DefaultDotDict, self).__init__(*args, **kwargs)
+		self.__default_value = default_value
+
+	def __getattr__(self, attribute_name):
+		"""Get the dict value of the key where the attribute_name == key."""
+		if '_DefaultDotDict__default_value' == attribute_name:
+			super.__setattr__(self, attribute_name, attribute_value)
 		else:
-			super.__setattr__(self, attribute_name, value)
+			return self[attribute_name]
 
+	def __setattr__(self, attribute_name, attribute_value):
+		"""Set the dict value of the key where the attribute_name == key."""
+		if '_DefaultDotDict__default_value' == attribute_name:
+			super.__setattr__(self, attribute_name, attribute_value)
+		else:
+			self[attribute_name] = attribute_value
 
-class DotNotationDict(DefaultDotNotationDict):
-	"""A Class that extends the standard 'dict' class."""
-	
-	def __init__(self, *args, **kwargs):
-		super(DotNotationDict, self).__init__(
-			DefaultDotNotationDict._DefaultDotNotationDict__NoDefault(),
-			*args,
-			**kwargs,
-		)
+	def __missing__(self, key):
+		"""Set the missing key to the default value if it does not exist."""
+		self[key] = self.__default_value
+		return self[key]
