@@ -1,53 +1,153 @@
 from dot_notation_dictionary import DotDict, DefaultDotDict
+import unittest
 
-dot_not_dict = DotDict(
-    {
-        'alpha': 'Value of alpha',
-        'beta': 'Value of beta',
-    },
-    keyword_parameter_key_one=None,
-    keyword_parameter_key_two='hello',
+test_dot_dict = DotDict(
+    alpha=1,
+    beta=2,
+    gamma=5,
 )
 
-print(f'Values in the DotDict: {dot_not_dict}\n')
-
-print(
-    'Testing if the DotDict is still evaluated as a dict: '
-    f'{isinstance(dot_not_dict, dict)}'
+test_default_dot_dict = DefaultDotDict(
+    'default_value',
+    alpha=1,
+    beta=2,
+    gamma=5,
 )
 
-print(f'Accessing \'alpha\' with brackets: {dot_not_dict["alpha"]}')
-print(f'Accessing \'alpha\' with \'.get\': {dot_not_dict.get("alpha")}')
-print(f'Accessing \'alpha\' with dot notation: {dot_not_dict.alpha}\n')
+class TestDotDictMethods(unittest.TestCase):
 
-print(
-    'Attempting to access an element that does not exist in the dict: ', 
-    end=' ',
-)
-try:
-    print(dot_not_dict.delta)
-except KeyError as err:
-    print(f'raised ("{err}"), due to \'delta\' not being in dict')
+    def test_DotDict_isinstances(self):
+        self.assertEqual(isinstance(test_dot_dict, dict), True)
+        self.assertEqual(isinstance(test_dot_dict, DotDict), True)
+        self.assertEqual(isinstance(test_dot_dict, list), False)
 
-print('\nAdding the element to the dict with dot notation...\n')
-dot_not_dict.delta = 3
+    def test_DotDict_initialization_with_keywords(self):
+        dot_dict = DotDict(
+            alpha=1,
+            beta=2,
+            gamma=5,
+        )
+        self.assertEqual(dot_dict.alpha, 1)
+        self.assertEqual(dot_dict.beta, 2)
+        self.assertEqual(dot_dict.gamma, 5)
 
-print(
-    'Attempting to access the element now that it does exist in the dict: ',
-    end=' ',
-)
-try:
-    print(dot_not_dict.delta)
-except KeyError as err:
-    print(f'raised {err}, due to \'delta\' not being in dict')
+    def test_DotDict_initialization_with_dict_parameter(self):
+        dot_dict = DotDict(
+            {
+                'alpha': 1,
+                'beta': 2,
+                'gamma': 5,
+            },
+        )
+        self.assertEqual(dot_dict.alpha, 1)
+        self.assertEqual(dot_dict.beta, 2)
+        self.assertEqual(dot_dict.gamma, 5)
 
+    def test_DotDict_initialization_with_keywords_and_dict(self):
+        dot_dict = DotDict(
+            {
+                'alpha': 1,
+                'beta': 2
+            },
+            gamma=5,
+        )
+        self.assertEqual(dot_dict.alpha, 1)
+        self.assertEqual(dot_dict.beta, 2)
+        self.assertEqual(dot_dict.gamma, 5)
 
-print(f'\nValues in the DotDict: {dot_not_dict}\n')
+    def test_access_index_with_brackets(self):
+        self.assertEqual(test_dot_dict['alpha'], 1)
+        self.assertEqual(test_dot_dict['beta'], 2)
+        self.assertEqual(test_dot_dict['gamma'], 5)
 
-default_dot_not_dict = DefaultDotDict(0, {'a': 1, 'c': 1,})
-print(default_dot_not_dict)
-print(default_dot_not_dict.b)
-print(default_dot_not_dict)
-print(default_dot_not_dict['d'])
-print(isinstance(default_dot_not_dict, dict))
-print(default_dot_not_dict)
+    def test_access_index_with_get_method(self):
+        self.assertEqual(test_dot_dict.get('alpha'), 1)
+        self.assertEqual(test_dot_dict.get('beta'), 2)
+        self.assertEqual(test_dot_dict.get('gamma'), 5)
+
+    def test_access_index_with_dot_notation(self):
+        self.assertEqual(test_dot_dict.alpha, 1)
+        self.assertEqual(test_dot_dict.beta, 2)
+        self.assertEqual(test_dot_dict.gamma, 5)
+
+    @unittest.expectedFailure
+    def test_access_index_that_does_not_exist_with_brackets(self):
+        test_dot_dict['delta']
+
+    @unittest.expectedFailure
+    def test_access_index_that_does_not_exist_with_get_method(self):
+        _default_value = -1
+        self.assertNotEqual(test_dot_dict.get('delta', _default_value), _default_value)
+
+    @unittest.expectedFailure
+    def test_access_index_that_does_not_exist_with_dot_notation(self):
+        test_dot_dict.delta
+
+class TestDefaultDotDictMethods(unittest.TestCase):
+
+    def test_DefaultDotDict_isinstances(self):
+        self.assertEqual(isinstance(test_default_dot_dict, dict), True)
+        self.assertEqual(isinstance(test_default_dot_dict, DefaultDotDict), True)
+        self.assertEqual(isinstance(test_default_dot_dict, list), False)
+
+    def test_DefaultDotDict_initialization_with_keywords(self):
+        dot_dict = DotDict(
+            alpha=1,
+            beta=2,
+            gamma=5,
+        )
+        self.assertEqual(dot_dict.alpha, 1)
+        self.assertEqual(dot_dict.beta, 2)
+        self.assertEqual(dot_dict.gamma, 5)
+
+    def test_DefaultDotDict_initialization_with_dict_parameter(self):
+        dot_dict = DotDict(
+            {
+                'alpha': 1,
+                'beta': 2,
+                'gamma': 5,
+            },
+        )
+        self.assertEqual(dot_dict.alpha, 1)
+        self.assertEqual(dot_dict.beta, 2)
+        self.assertEqual(dot_dict.gamma, 5)
+
+    def test_DefaultDotDict_initialization_with_keywords_and_dict(self):
+        dot_dict = DotDict(
+            {
+                'alpha': 1,
+                'beta': 2
+            },
+            gamma=5,
+        )
+        self.assertEqual(dot_dict.alpha, 1)
+        self.assertEqual(dot_dict.beta, 2)
+        self.assertEqual(dot_dict.gamma, 5)
+
+    def test_access_index_with_brackets(self):
+        self.assertEqual(test_default_dot_dict['alpha'], 1)
+        self.assertEqual(test_default_dot_dict['beta'], 2)
+        self.assertEqual(test_default_dot_dict['gamma'], 5)
+
+    def test_access_index_with_get_method(self):
+        self.assertEqual(test_default_dot_dict.get('alpha'), 1)
+        self.assertEqual(test_default_dot_dict.get('beta'), 2)
+        self.assertEqual(test_default_dot_dict.get('gamma'), 5)
+
+    def test_access_index_with_dot_notation(self):
+        self.assertEqual(test_default_dot_dict.alpha, 1)
+        self.assertEqual(test_default_dot_dict.beta, 2)
+        self.assertEqual(test_default_dot_dict.gamma, 5)
+
+    def test_access_index_that_does_not_exist_with_brackets(self):
+        self.assertEqual(test_default_dot_dict['delta'], 'default_value')
+
+    def test_access_index_that_does_not_exist_with_get_method(self):
+        _default_value = -1
+        self.assertEqual(test_default_dot_dict.get('delta', _default_value), 'default_value')
+
+    def test_access_index_that_does_not_exist_with_dot_notation(self):
+        self.assertEqual(test_default_dot_dict.delta, 'default_value')
+
+if __name__ == '__main__':
+    unittest.main()
