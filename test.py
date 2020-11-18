@@ -1,5 +1,7 @@
 from dot_notation_dictionary import DotDict, DefaultDotDict
+
 import unittest
+import json
 
 test_dot_dict = DotDict(
     alpha=1,
@@ -54,6 +56,32 @@ class TestDotDictMethods(unittest.TestCase):
         self.assertEqual(dot_dict.alpha, 1)
         self.assertEqual(dot_dict.beta, 2)
         self.assertEqual(dot_dict.gamma, 5)
+
+    def test_DotDict_JSON(self):
+        dict_value = {
+            'hello': 'hello', 
+            'test': {
+                'wow': 100, 
+                'other': 1.222
+            }, 
+            'list': [
+                1,
+                2,
+                'hello',
+                {
+                    'test': [
+                        1, 
+                        2, 
+                        None
+
+                    ],
+                },
+            ],
+        }
+        dot_dict_value = DotDict(dict_value)
+        dict_json_string = json.dumps(dict_value)
+        dot_json_string = json.dumps(dot_dict_value)
+        self.assertEqual(dict_json_string, dot_json_string)
 
     def test_access_index_with_brackets(self):
         self.assertEqual(test_dot_dict['alpha'], 1)
@@ -123,6 +151,32 @@ class TestDefaultDotDictMethods(unittest.TestCase):
         self.assertEqual(dot_dict.alpha, 1)
         self.assertEqual(dot_dict.beta, 2)
         self.assertEqual(dot_dict.gamma, 5)
+
+    def test_DefaultDotDict_JSON(self):
+        dict_value = {
+            'hello': 'hello', 
+            'test': {
+                'wow': 100, 
+                'other': 1.222
+            }, 
+            'list': [
+                1,
+                2,
+                'hello',
+                {
+                    'test': [
+                        1, 
+                        2, 
+                        None
+
+                    ],
+                },
+            ],
+        }
+        dot_dict_value = DotDict(dict_value)
+        dict_json_string = json.dumps(dict_value)
+        dot_json_string = json.dumps(dot_dict_value)
+        self.assertEqual(dict_json_string, dot_json_string)
 
     def test_access_index_with_brackets(self):
         self.assertEqual(test_default_dot_dict['alpha'], 1)
