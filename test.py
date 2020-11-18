@@ -115,7 +115,10 @@ class TestDotDictMethods(unittest.TestCase):
     @unittest.expectedFailure
     def test_access_index_that_does_not_exist_with_get_method(self):
         _default_value = -1
-        self.assertNotEqual(test_dot_dict.get('delta', _default_value), _default_value)
+        self.assertNotEqual(
+            test_dot_dict.get('delta', _default_value), 
+            _default_value,
+        )
 
     @unittest.expectedFailure
     def test_access_index_that_does_not_exist_with_dot_notation(self):
@@ -125,7 +128,10 @@ class TestDefaultDotDictMethods(unittest.TestCase):
 
     def test_DefaultDotDict_isinstances(self):
         self.assertEqual(isinstance(test_default_dot_dict, dict), True)
-        self.assertEqual(isinstance(test_default_dot_dict, DefaultDotDict), True)
+        self.assertEqual(
+            isinstance(test_default_dot_dict, DefaultDotDict), 
+            True,
+        )
         self.assertEqual(isinstance(test_default_dot_dict, list), False)
 
     def test_DefaultDotDict_initialization_with_keywords(self):
@@ -211,7 +217,10 @@ class TestDefaultDotDictMethods(unittest.TestCase):
 
     def test_access_index_that_does_not_exist_with_get_method(self):
         _default_value = -1
-        self.assertEqual(test_default_dot_dict.get('delta', _default_value), 'default_value')
+        self.assertEqual(
+            test_default_dot_dict.get('delta', _default_value), 
+            'default_value',
+        )
 
     def test_access_index_that_does_not_exist_with_dot_notation(self):
         self.assertEqual(test_default_dot_dict.delta, 'default_value')
@@ -220,7 +229,10 @@ class TestNestingDotDictMethods(unittest.TestCase):
 
     def test_NestingDotDict_isinstances(self):
         self.assertEqual(isinstance(test_nesting_dot_dict, dict), True)
-        self.assertEqual(isinstance(test_nesting_dot_dict, NestingDotDict), True)
+        self.assertEqual(
+            isinstance(test_nesting_dot_dict, NestingDotDict), 
+            True,
+        )
         self.assertEqual(isinstance(test_nesting_dot_dict, list), False)
 
     def test_NestingDotDict_initialization_with_keywords(self):
@@ -291,7 +303,10 @@ class TestNestingDotDictMethods(unittest.TestCase):
     def test_access_index_with_get_method(self):
         self.assertEqual(test_nesting_dot_dict.get('alpha'), 1)
         self.assertEqual(test_nesting_dot_dict.get('beta'), 2)
-        self.assertEqual(test_nesting_dot_dict.get('gamma').get('goodbye'), 'bye')
+        self.assertEqual(
+            test_nesting_dot_dict.get('gamma').get('goodbye'),
+            'bye',
+        )
 
     def test_access_index_with_dot_notation(self):
         self.assertEqual(test_nesting_dot_dict.alpha, 1)
@@ -305,7 +320,10 @@ class TestNestingDotDictMethods(unittest.TestCase):
     @unittest.expectedFailure
     def test_access_index_that_does_not_exist_with_get_method(self):
         _default_value = -1
-        self.assertNotEqual(test_nesting_dot_dict.get('delta', _default_value), _default_value)
+        self.assertNotEqual(
+            test_nesting_dot_dict.get('delta', _default_value),
+            _default_value,
+        )
 
     @unittest.expectedFailure
     def test_access_index_that_does_not_exist_with_dot_notation(self):
