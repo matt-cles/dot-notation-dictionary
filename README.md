@@ -17,5 +17,11 @@ Basic dict subclass.
 ### DefaultDotDict
 
 Dict subclass that allows for a default value for keys that do not have a value when they are first accessed.
+ 
+### NestingDotDict
 
+Dict subclass that automatically converts nested dicts to NestingDotDicts. This allows for creating a single NestingDotDict to access the value of any number of nested dicts with dot notation.
 
+## Testing
+
+Use command `python3 -m unittest test -v` to run unit test on the dict subclasses.
